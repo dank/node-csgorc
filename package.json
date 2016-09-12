@@ -1,0 +1,19 @@
+{
+  "name": "report",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "update": "node ./protos/updater.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "protobufjs": "^5.0.1",
+    "readline-sync": "^1.4.4",
+    "steam": "^1.4.0",
+    "steamid": "^1.1.0"
+  }
+}
