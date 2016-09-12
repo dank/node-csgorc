@@ -1,7 +1,7 @@
 'use strict';
 
 const Steam = require('steam');
-const Protos = require('./protos/protos.js');
+const Protos = require('./helpers/protos.js');
 var SteamId = require('steamid');
 const fs = require('fs');
 const crypto = require('crypto');
@@ -124,7 +124,7 @@ if (steamId.isValid() && opt >= 0) {
 function report(gc, sid, user) {
   console.info(`[${user}] Reporting...`);
 
-  var accountId = new SteamId(sid).accountid;
+  var accountId = sid.accountid;
   gc.send({
     msg: Protos.ECsgoGCMsg.k_EMsgGCCStrike15_v2_ClientReportPlayer,
     proto: {}
@@ -143,7 +143,7 @@ function report(gc, sid, user) {
 function commend(gc, sid, user) {
   console.info(`[${user}] Commending...`);
 
-  var accountId = new SteamId(sid).accountid;
+  var accountId = sid.accountid;
   gc.send({
     msg: Protos.ECsgoGCMsg.k_EMsgGCCStrike15_v2_ClientCommendPlayer,
     proto: {}
