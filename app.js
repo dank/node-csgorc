@@ -41,7 +41,6 @@ if (steamId.isValid() && opt >= 0) {
 
     steamClient.on('logOnResponse', res => {
       const eresult = res.eresult;
-      console.info(`[${user[0]}] ${eresult}`);
 
       if (eresult === Steam.EResult.OK) {
         console.info(`[${user[0]}] Logged in!`);
