@@ -29,10 +29,10 @@ if (steamId.isValid() && opt >= 0) {
     };
 
     let keepAlive;
-    fs.access(`./sentry/${param[0]}`, fs.F_OK, err => {
+    fs.access(`/sentry/${param[0]}`, fs.F_OK, err => {
       if (!err) {
         console.info(`[${param[0]}] Sentryfile found!`);
-        login.sha_sentryfile = fs.readFileSync(`./sentry/${param[0]}`);
+        login.sha_sentryfile = fs.readFileSync(`/sentry/${param[0]}`);
       }
     });
 
