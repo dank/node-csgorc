@@ -25,7 +25,7 @@ if (steamId.isValid() && opt >= 0) {
     const param = account.split(':');
     let login = {
       account_name: param[0],
-      password: param[1].replace(/[\n\t\r]/g,"")
+      password: param[0].replace(/[\n\t\r]/g,"")
     };
 
     let keepAlive;
