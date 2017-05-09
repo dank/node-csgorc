@@ -17,6 +17,10 @@ if (opt == 0)
 
 if (steamId.isValid() && opt >= 0) {
   accounts.forEach(account => {
+    if(!account) {
+      return;
+    }
+
     const client = new Steam.SteamClient();
     const user = new Steam.SteamUser(client);
     const gc = new Steam.SteamGameCoordinator(client, 730);
@@ -25,7 +29,7 @@ if (steamId.isValid() && opt >= 0) {
     const param = account.split(':');
     let login = {
       account_name: param[0],
-      password: param[1].replace(/[\n\t\r]/g,"")
+      password: param[1]
     };
 
     let keepAlive;
