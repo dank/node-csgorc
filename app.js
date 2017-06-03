@@ -132,9 +132,9 @@ function report(gc, sid, matchid, user) {
   console.info(`[${user}] Reporting...`);
 
   let accountId = sid.accountid;
-  if (matchid == null) {
+  if (matchid === null)
     matchid = 8;
-  }
+  
   gc.send({
     msg: Protos.ECsgoGCMsg.k_EMsgGCCStrike15_v2_ClientReportPlayer,
     proto: {}
