@@ -12,12 +12,12 @@ const steamId = new SteamId(readline.question('SteamID64: '));
 const opt = readline.keyInSelect(['Report', 'Commend']);
 
 let matchId;
-if (opt == 0)
+if (opt === 0)
   matchId = readline.question('Match ID: ');
 
 if (steamId.isValid() && opt >= 0) {
   accounts.forEach(account => {
-    if(!account) {
+    if (!account) {
       return;
     }
 
@@ -29,14 +29,14 @@ if (steamId.isValid() && opt >= 0) {
     const param = account.split(':');
     let login = {
       account_name: param[0],
-      password: param[1].replace(/[\n\t\r]/g,"")
+      password: param[1].replace(/[\n\t\r]/g, '')
     };
 
     let keepAlive;
-    fs.access(`/sentry/${param[0]}`, fs.F_OK, err => {
+    fs.access(`./sentry/${param[0]}`, fs.F_OK, err => {
       if (!err) {
         console.info(`[${param[0]}] Sentryfile found!`);
-        login.sha_sentryfile = fs.readFileSync(`/sentry/${param[0]}`);
+        login.sha_sentryfile = fs.readFileSync(`./sentry/${param[0]}`);
       }
     });
 
@@ -86,6 +86,10 @@ if (steamId.isValid() && opt >= 0) {
         return shasum.read();
       }
 
+      if (!fs.existsSync('./sentry')) {
+        fs.mkdirSync('./sentry');
+      }
+
       fs.writeFileSync(`./sentry/${param[0]}`, SHA1(data.bytes));
       next({sha_file: SHA1(data.bytes)});
     });
@@ -95,13 +99,13 @@ if (steamId.isValid() && opt >= 0) {
       client.disconnect();
     });
 
-    gc.on('message', (header, buffer, next) => {
+    gc.on('message', (header, buffer) => {
       switch (header.msg) {
         case 4004:
           clearInterval(keepAlive);
-          if (opt == 0) {
+          if (opt === 0) {
             report(gc, steamId, matchId, param[0]);
-          } else if (opt == 1) {
+          } else if (opt === 1) {
             commend(gc, steamId, param[0]);
           } else {
             console.error('idk');
@@ -134,7 +138,7 @@ function report(gc, sid, matchid, user) {
   let accountId = sid.accountid;
   if (matchid === null)
     matchid = 8;
-  
+
   gc.send({
     msg: Protos.ECsgoGCMsg.k_EMsgGCCStrike15_v2_ClientReportPlayer,
     proto: {}
